@@ -1,8 +1,6 @@
-// import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player_app/components/album_info.dart';
 import 'package:music_player_app/components/custom_bottom_nav_bar.dart';
-// import 'package:music_player_app/components/song_list.dart';
 import 'package:music_player_app/pages/player_page.dart';
 
 class AlbumPage extends StatelessWidget {
