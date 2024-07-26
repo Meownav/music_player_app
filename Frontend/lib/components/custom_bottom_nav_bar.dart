@@ -3,7 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  const CustomBottomNavBar({super.key});
+  final int curIdx;
+  final ValueChanged<int> onTap;
+
+  const CustomBottomNavBar({
+    super.key,
+    required this.curIdx,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +35,14 @@ class CustomBottomNavBar extends StatelessWidget {
           topRight: Radius.circular(12),
         ),
         child: BottomNavigationBar(
+          currentIndex: curIdx,
           iconSize: 24,
-          type: BottomNavigationBarType.fixed,
+          // type: BottomNavigationBarType.fixed,
+          onTap: onTap,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                CupertinoIcons.home,
+                FluentIcons.home_more_20_filled,
               ),
               activeIcon: Icon(
                 FluentIcons.home_12_filled,
@@ -42,16 +51,17 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
+              activeIcon: Icon(FluentIcons.search_sparkle_32_regular),
               label: "Search",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.my_library_music_rounded),
               label: "Library",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.local_fire_department_rounded),
-              label: "Hot",
-            )
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.local_fire_department_rounded),
+            //   label: "Hot",
+            // )
           ],
         ),
       ),

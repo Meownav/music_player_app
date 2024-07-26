@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music_player_app/pages/home_page.dart';
+// import 'package:music_player_app/pages/home_page.dart';
+import 'package:music_player_app/pages/page_provider.dart';
 import 'package:music_player_app/themes/light_mode.dart';
 
 void main() {
@@ -15,8 +16,7 @@ class MainApp extends StatelessWidget {
       theme: lightMode,
       debugShowCheckedModeBanner: false,
       home: const Scaffold(
-        body: HomePage(),
-        // body: AlbumPage(),
+        body: PageProvider(),
       ),
     );
   }

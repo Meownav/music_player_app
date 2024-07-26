@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:music_player_app/components/album_info.dart';
-import 'package:music_player_app/components/custom_bottom_nav_bar.dart';
 import 'package:music_player_app/pages/player_page.dart';
 
 class AlbumPage extends StatelessWidget {
@@ -57,7 +56,7 @@ class AlbumPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      // bottomNavigationBar: const CustomBottomNavBar(),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 20,

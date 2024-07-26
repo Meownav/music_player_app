@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_player_app/components/custom_bottom_nav_bar.dart';
 import 'package:music_player_app/components/custom_carousel.dart';
 import 'package:music_player_app/pages/album_page.dart';
 import 'package:music_player_app/pages/player_page.dart';
@@ -66,15 +65,15 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        title: const Text("H O M E"),
+        backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(
-          "H O M E",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        // actions: const [
+        //   Padding(
+        //     padding: EdgeInsets.all(16),
+        //     child: Icon(Icons.search),
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0, left: 12, right: 12),
@@ -108,7 +107,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      // bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

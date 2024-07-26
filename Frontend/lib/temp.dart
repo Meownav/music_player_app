@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 void main() async {
-  var url = Uri.parse('https://saavn.dev/api/search?query=Imagine+Dragons');
+  var song = "ku bhagyan";
+  var url = Uri.parse('https://saavn.dev/api/search?query=$song');
   var response = await http.get(url);
-  print(response.statusCode);
-  print(response.body);
+
+  jsonDecode((jsonDecode(response.body))['']);
 }
