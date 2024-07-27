@@ -14,11 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<List<Map<dynamic, dynamic>>> topAlbums;
-  late Future<List<Map<dynamic, dynamic>>> topSongs;
-  late Future<List<Map<dynamic, dynamic>>> newAlbums;
-  late Future<List<Map<dynamic, dynamic>>> newSongs;
-
   var topAlbumNames = [
     "Trilogy",
     "Dawn FM",
@@ -27,100 +22,88 @@ class _HomePageState extends State<HomePage> {
     "Guts"
   ];
 
-  Future<List<Map<dynamic, dynamic>>> fetchAlbums(
-      String album, int limit) async {
-    var url = Uri.parse(
-        "https://saavn.dev/api/search/albums?query=$album&limit=$limit");
-    var response = await http.get(url);
-    var data = jsonDecode(response.body)["data"];
-    var results = data["results"];
-    return List<Map<dynamic, dynamic>>.from(results);
-  }
+  var newAlbumNames = [
+    "Animal",
+    "Death of slim shady",
+    "Not like us",
+  ];
 
-  Future<List<Map<dynamic, dynamic>>> fetchTopAlbums(
-      List<String> topAlbumNames) async {
-    List<Map<dynamic, dynamic>> albums = [];
-    for (var album in topAlbumNames) {
-      var albumData = await fetchAlbums(album, 1);
-      albums.add(albumData[0]);
+  var topSongNames = [
+    "Not like us",
+    "birds of a feather",
+    "Please please please",
+    "Espresso",
+    "who",
+    "too sweet"
+  ];
+
+  var newSongNames = [
+    "Fe!n",
+    "I don't wanna wait",
+    "Mirame",
+    "I wanna be yours",
+    "As it was",
+  ];
+
+  late Future<List<Map<dynamic, dynamic>>> topAlbums;
+  late Future<List<Map<dynamic, dynamic>>> topSongs;
+  late Future<List<Map<dynamic, dynamic>>> newAlbums;
+  late Future<List<Map<dynamic, dynamic>>> newSongs;
+
+  Future<List<Map<dynamic, dynamic>>> fetchData(
+      List<String> names, String type, int limit) async {
+    List<Map<dynamic, dynamic>> dataList = [];
+    for (var name in names) {
+      var url = Uri.parse(
+          "https://saavn.dev/api/search/$type?query=$name&limit=$limit");
+      var response = await http.get(url);
+      var data = jsonDecode(response.body)["data"];
+      var results = data["results"];
+      dataList.add(results[0]);
     }
-    print(albums[0]["image"]);
-    return albums;
+    return dataList;
   }
 
   @override
   void initState() {
     super.initState();
-    topAlbums = fetchTopAlbums(topAlbumNames);
+    topAlbums = fetchData(topAlbumNames, "albums", 1);
+    newAlbums = fetchData(newAlbumNames, "albums", 1);
+    topSongs = fetchData(topSongNames, "songs", 1);
+    newSongs = fetchData(newSongNames, "songs", 1);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("H O M E"),
+        scrolledUnderElevation: 0,
+        toolbarHeight: 80,
+        title: Align(
+          alignment: Alignment.centerRight,
+          child: Text("H O M E"),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
+        titleTextStyle: TextStyle(
+          fontSize: 36,
+          fontWeight: FontWeight.w600,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 20.0, left: 12, right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //
               FutureBuilder<List<Map<dynamic, dynamic>>>(
                 future: topAlbums,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
-                    return Text("Error, ${snapshot.error}");
-                  } else {
-                    return CustomCarousel(
-                      title: "New Songs",
-                      albumList: snapshot.data!,
-                    );
-                  }
-                },
-              ),
-              FutureBuilder<List<Map<dynamic, dynamic>>>(
-                future: topAlbums,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error, ${snapshot.error}");
-                  } else {
-                    return CustomCarousel(
-                      title: "New Albums",
-                      albumList: snapshot.data!,
-                    );
-                  }
-                },
-              ),
-              FutureBuilder<List<Map<dynamic, dynamic>>>(
-                future: topAlbums,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error, ${snapshot.error}");
-                  } else {
-                    return CustomCarousel(
-                      title: "Top Songs",
-                      albumList: snapshot.data!,
-                    );
-                  }
-                },
-              ),
-              FutureBuilder<List<Map<dynamic, dynamic>>>(
-                future: topAlbums,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error, ${snapshot.error}");
+                    return Center(child: Text("Error: ${snapshot.error}"));
                   } else {
                     return CustomCarousel(
                       title: "Top Albums",
@@ -129,8 +112,54 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
-              Text("hie"),
-              Text("hie"),
+              const SizedBox(height: 20),
+              FutureBuilder<List<Map<dynamic, dynamic>>>(
+                future: newAlbums,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  } else {
+                    return CustomCarousel(
+                      title: "New Albums",
+                      albumList: snapshot.data!,
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+              FutureBuilder<List<Map<dynamic, dynamic>>>(
+                future: topSongs,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  } else {
+                    return CustomCarousel(
+                      title: "Top Songs",
+                      albumList: snapshot.data!,
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+              FutureBuilder<List<Map<dynamic, dynamic>>>(
+                future: newSongs,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  } else {
+                    return CustomCarousel(
+                      title: "New Songs",
+                      albumList: snapshot.data!,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
