@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:music_player_app/components/album_info.dart';
-import 'package:music_player_app/pages/player_page.dart';
 
 class AlbumPage extends StatelessWidget {
   final String albumName;
 
   const AlbumPage({super.key, required this.albumName});
-
-  void _onSongTap(BuildContext context, String songTitle) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PlayerPage(
-          songTitle: songTitle,
-          artistName: "Brambles",
-          albumArt: "lib/assets/images/cover.webp",
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +127,6 @@ class AlbumPage extends StatelessWidget {
                       song['duration']!,
                       // style: Theme.of(context).textTheme.bodyText2,
                     ),
-                    onTap: () => _onSongTap(context, song['title']!),
                   );
                 },
               ),

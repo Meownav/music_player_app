@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 class CustomCarousel extends StatelessWidget {
   final String title;
-  final List<String> items;
-  final void Function(String) onItemTap;
+  final List<Map> albumList;
 
   const CustomCarousel({
     super.key,
     required this.title,
-    required this.items,
-    required this.onItemTap,
+    required this.albumList,
   });
 
+// will take [{albuminfo1}, {albuminfo2}...]
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,27 +20,43 @@ class CustomCarousel extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           title,
-          // style: Theme.of(context).textTheme.headline6,
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             padding: const EdgeInsets.all(4),
             scrollDirection: Axis.horizontal,
-            itemCount: items.length,
+            itemCount: albumList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => onItemTap(items[index]),
                 child: Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey[300], // Placeholder color
+                    // color: Colors.grey[300],
                   ),
                   width: 150,
-                  child: Center(
-                    child: Text(items[index]),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                              albumList[index]["image"][2]["url"]),
+                        ),
+                      ),
+                      Text(
+                        albumList[index]["name"],
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        maxLines: 2,
+                      ),
+                    ],
                   ),
                 ),
               );

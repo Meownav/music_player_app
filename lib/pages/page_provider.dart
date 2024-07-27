@@ -16,10 +16,10 @@ class _PageProviderState extends State<PageProvider> {
 
   final PageController _pageController = PageController();
 
-  final List<Widget> _pageList = const [
+  final List<Widget> _pageList = [
     HomePage(),
-    SearchPage(),
-    LibraryPage(),
+    const SearchPage(),
+    const LibraryPage(),
   ];
 
   void _onPageChanged(int idx) {
