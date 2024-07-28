@@ -45,25 +45,33 @@ class CustomCarousel extends StatelessWidget {
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 8,
-                        offset: Offset(0, 4),
+                        offset: Offset(4, 4),
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 8,
+                        offset: Offset(-4, -4),
                       ),
                     ],
                     color: Colors.white,
                   ),
-                  width: 150,
+                  width: 180,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            albumList[index]["image"][2]["url"],
-                            fit: BoxFit.cover,
+                      Center(
+                        child: Container(
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              albumList[index]["image"][2]["url"],
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -71,9 +79,10 @@ class CustomCarousel extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           albumList[index]["name"],
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
